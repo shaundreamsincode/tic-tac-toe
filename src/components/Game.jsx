@@ -1,57 +1,48 @@
 import React, { useState } from "react";
+import Board from "./Board";
 
 const Game = () => {
+    const [winner, setWinner] = useState(null);
     const [currentPlayer, setCurrentPlayer] = useState("x");
-    const [board, setBoard] = useState(Array(3).fill(Array(3)))
+    const [grid, setGrid] = useState(Array(3).fill(Array(3)))
 
-    const buildRows = () => {
-        let rows = []
+    const onSquareClick = (i,j) => {
+        const newGrid = grid.map(row => row.map((column) => column ));
 
-        for(let i = 0; i < board[0].length; i++) {
-            let row = [];
+        newGrid[i][j] = currentPlayer;
+        setGrid(newGrid);
 
-            for (let j = 0; j < board[0].length; j++ ) {
-                if(board[i][j]) {
-                    row.push(board[i][j])
-                } else {
-                    row.push("-")
-                }
-                // row.push(<Square key={ `${ i + j }` } usedBy={board[i][j]}/>)
-            }
-
-            rows.push(row);
+        if (isWinningGrid(newGrid)) {
+            setWinner(currentPlayer);
+        } else {
+            toggleCurrentPlayer();
         }
-
-        return rows;
     }
 
+    const toggleCurrentPlayer = () => {
+        if (currentPlayer === "x") {
+            setCurrentPlayer("o");
+        } else {
+            setCurrentPlayer("x")
+        }
+    }
+
+    const isWinningGrid = (newGrid) => {
+        debugger;
+    };
 
     return(
         <div className="game">
-            it is player { `${currentPlayer}` } turn
+            {
+                winner && <div>{ `the winner is ${winner}` }</div>
+            }
 
-            <div className="board">
-                <table>
-                    {
-                        buildRows().map((row) => {
-                            return(<tr>
-                                {
-                                    row.map((square) => {
-                                        return(
-                                            <td>
-                                                {
-                                                    square
-                                                }
-                                            </td>
-                                        )
-                                    })
-                                }
-                            </tr>)
-                        })
-                    }
+            {
+                !winner && <div>{ `it is player ${currentPlayer}'s turn.` }</div>
+            }
 
-                </table>
-            </div>
+
+            <Board grid={grid} onSquareClick={onSquareClick}/>
         </div>
     )
     // return(<div><Square /></div>)

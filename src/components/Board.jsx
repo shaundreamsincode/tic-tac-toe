@@ -1,55 +1,50 @@
-// import React from "react";
-// import Square from "./Square";
-//
-// const Board = ({board}) => {
-//     const onSquareClick = () => {
-//
-//     }
-//     const buildRows = () => {
-//         let rows = []
-//
-//         for(let i = 0; i < board[0].length; i++) {
-//             let row = [];
-//
-//             for (let j = 0; j < board[0].length; j++ ) {
-//                 if(board[i][j]) {
-//                     row.push(board[i][j])
-//                 } else {
-//                     row.push("-")
-//                 }
-//                 // row.push(<Square key={ `${ i + j }` } usedBy={board[i][j]}/>)
-//             }
-//
-//             rows.push(row);
-//         }
-//
-//         return rows;
-//     }
-//
-//     return(
-//         <div className="board">
-//             <table>
-//                 {
-//                     buildRows().map((row) => {
-//                         return(<tr>
-//                             {
-//                                 row.map((square) => {
-//                                     return(
-//                                         <td>
-//                                             {
-//                                                 square
-//                                             }
-//                                         </td>
-//                                     )
-//                                 })
-//                             }
-//                         </tr>)
-//                     })
-//                 }
-//
-//             </table>
-//         </div>
-//     )
-// }
-//
-// export default Board;
+import React from "react";
+
+const Board = ({grid, onSquareClick}) => {
+    const buildRows = () => {
+        let rows = []
+
+        for(let i = 0; i < grid[0].length; i++) {
+            let row = [];
+
+            for (let j = 0; j < grid[0].length; j++ ) {
+                if(grid[i][j]) {
+                    row.push(grid[i][j])
+                } else {
+                    row.push(<div onClick={onSquareClick.bind(this, i, j)}> - </div>)
+                }
+            }
+
+            rows.push(row);
+        }
+
+        return rows;
+    }
+
+    return(
+        <div className="board">
+            <table>
+                {
+                    buildRows().map((row) => {
+                        return(<tr>
+                            {
+                                row.map((square) => {
+                                    return(
+                                        <td>
+                                            {
+                                                square
+                                            }
+                                        </td>
+                                    )
+                                })
+                            }
+                        </tr>)
+                    })
+                }
+
+            </table>
+        </div>
+    )
+}
+
+export default Board;
