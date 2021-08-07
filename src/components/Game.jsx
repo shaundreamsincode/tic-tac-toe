@@ -12,11 +12,41 @@ const Game = () => {
         newGrid[i][j] = currentPlayer;
         setGrid(newGrid);
 
-        if (isWinningGrid(newGrid)) {
+        if (!!isWinningGrid(newGrid)) {
             setWinner(currentPlayer);
         } else {
             toggleCurrentPlayer();
         }
+    }
+
+    const isWinningGrid = (winningGrid) => {
+        // check three horizontal lines
+        debugger;
+        if (winningGrid[0][0] && winningGrid[0][0] === winningGrid[0][1] && winningGrid[0][0] === winningGrid[0][2]) {
+            return winningGrid[0][0];
+        } else if (winningGrid[1][0] && winningGrid[1][0] === winningGrid[1][1] && winningGrid[1][0] === winningGrid[1][2]) {
+            return winningGrid[1][0];
+        } else if (winningGrid[2][0] && winningGrid[2][0] === winningGrid[2][1] && winningGrid[2][0] === winningGrid[2][2]) {
+            return winningGrid[2][0];
+        }
+
+        // check three vertical lines
+        if (winningGrid[0][0] && (winningGrid[0][0] === winningGrid[1][0]) && (winningGrid[0][0] === winningGrid[2][0])) {
+            return winningGrid[0][0];
+        } else if (winningGrid[0][1] && (winningGrid[0][1] === winningGrid[1][1]) && (winningGrid[1][1] === winningGrid[2][1])) {
+            return winningGrid[0][1];
+        } else if (winningGrid[0][2] && (winningGrid[0][2] === winningGrid[1][2]) && (winningGrid[1][2] === winningGrid[2][2])) {
+            return winningGrid[2][2];
+        }
+
+        // check two diagonal lines
+        if (winningGrid[0][0] && winningGrid[0][0] === winningGrid[1][1] && winningGrid[0][0] === winningGrid[2][2]) {
+            return(winningGrid[0][0])
+        } else if (winningGrid[0][2] && winningGrid[0][2] === winningGrid[1][1] && winningGrid[0][2] === winningGrid[2][0]) {
+            return(winningGrid[0][2])
+        }
+
+        return false
     }
 
     const toggleCurrentPlayer = () => {
@@ -26,10 +56,6 @@ const Game = () => {
             setCurrentPlayer("x")
         }
     }
-
-    const isWinningGrid = (newGrid) => {
-        debugger;
-    };
 
     return(
         <div className="game">
