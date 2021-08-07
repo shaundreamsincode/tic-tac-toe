@@ -5,9 +5,11 @@ const Game = () => {
     const [winner, setWinner] = useState(null);
     const [currentPlayer, setCurrentPlayer] = useState("x");
     const [grid, setGrid] = useState(Array(3).fill(Array(3)))
+    const [turn, setTurn] = useState(0);
+    const [gameOver, setGameOver] = useState(false);
 
     const onSquareClick = (i,j) => {
-        const newGrid = grid.map(row => row.map((column) => column ));
+        const newGrid = grid.map(row => row.map((column) => column));
 
         newGrid[i][j] = currentPlayer;
         setGrid(newGrid);
@@ -16,6 +18,7 @@ const Game = () => {
             setWinner(currentPlayer);
         } else {
             toggleCurrentPlayer();
+            setTurn(turn + 1);
         }
     }
 
@@ -57,6 +60,14 @@ const Game = () => {
         }
     }
 
+    const onRestartGame = () => {
+
+    }
+
+    const buildEmptyGrid = () => {
+
+    }
+
     return(
         <div className="game">
             {
@@ -64,14 +75,20 @@ const Game = () => {
             }
 
             {
-                !winner && <div>{ `it is player ${currentPlayer}'s turn.` }</div>
+                turn !== 9 && !winner && <div>{ `it is player ${currentPlayer}'s turn.` }</div>
             }
 
+            {
+                turn === 9 && <div>Stalemate</div>
+            }
 
             <Board grid={grid} onSquareClick={onSquareClick}/>
+
+            {
+                gameOver && <div onClick={onRestartGame}>New Game</div>
+            }
         </div>
     )
-    // return(<div><Square /></div>)
 }
 
 export default Game;
